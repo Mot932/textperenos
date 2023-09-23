@@ -1,51 +1,20 @@
-To create a progress bar that increments with each processed word, you can modify your `run` function as follows:
+Вы правильно добавили прогресс-бар в ваш GUI. Теперь вам нужно интегрировать его с вашей логикой обработки слов в функции `update_progress`. В текущей версии кода он всего лишь инкрементирует прогресс-бар для каждого слова, но не выполняет фактической обработки. Вам нужно заменить комментарий `# Process your word here` на реальную логику обработки каждого слова.
+
+Примерно так:
 
 ```python
-import tkinter as tk
-from tkinter import colorchooser, filedialog
-from PIL import Image
-import analiz
-
-# ... Your existing code ...
-
 def update_progress(progress_var, total_words):
     for i in range(total_words):
-        progress_var.set(i)
+        progress_var.set(i + 1)  # Increment progress
         window.update()
-        # Process your word here
-
-def run():
-    pos_list = []
-    if noun_var.get():
-        pos_list.append('NOUN')
-    if verb_var.get():
-        pos_list.append('VERB')
-
-    if file_path:
-        words_to_process = int(entry.get())
-        progress_var = tk.IntVar()  # Create a progress variable
-
-        # Create a progress bar
-        progress = tk.Progressbar(window, orient="horizontal", length=200, mode="determinate", variable=progress_var)
-        progress.grid(row=6, column=0, columnspan=2, padx=6, pady=6)
-
-        # Start processing words and updating progress
-        update_progress(progress_var, words_to_process)
-
-        analiz.TextAnalyser(
-            file_name=file_path,
-            pos_list=pos_list,
-            chislo=words_to_process,
-            background=color[1],
-            width=int(entry2.get()),
-            height=int(entry3.get())
-        )
-    else:
-        print("Выберите файл перед запуском анализатора")
-
-# ... Your existing code ...
-
-window.mainloop()
+        word = get_next_word_to_process()  # Replace with your word retrieval logic
+        if word:
+            # Process the word here
+            result = process_word(word)
+            # Update any display or output based on the result if needed
+        else:
+            # Handle the case where there are no more words to process
+            break
 ```
 
-This code adds a progress bar to your GUI, and the `update_progress` function will increment the progress bar as words are processed. You will need to integrate this with your actual word processing logic in the `update_progress` function, which is currently just a placeholder.
+В этом примере `get_next_word_to_process` и `process_word` - это функции, которые вы должны определить для вашей конкретной логики обработки слов. В `get_next_word_to_process` вы можете получать следующее слово для обработки, а `process_word` выполняет фактическую обработку этого слова.
