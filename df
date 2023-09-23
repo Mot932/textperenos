@@ -1,4 +1,4 @@
-Certainly! Here's the complete modified code with the canvas widget to change its background color based on the selected color:
+Чтобы упорядочить элементы в вашем GUI с помощью `grid`, вы должны использовать метод `grid()` для каждого виджета и указать его строку и столбец в сетке. Вот как это может выглядеть для вашего кода:
 
 ```python
 import tkinter as tk
@@ -8,12 +8,11 @@ import analiz
 color = ""  # Variable to store the selected color
 file_path = ""  # Variable to store the selected file path
 
-def show_color_picker(canvas):
+def show_color_picker():
     global color
     color = colorchooser.askcolor(title="Выберите цвет")
     if color[1]:
         print("Выбранный цвет:", color[1])
-        canvas.config(bg=color[1])  # Update canvas background color
 
 def select_file():
     global file_path
@@ -41,39 +40,45 @@ def run():
         print("Выберите файл перед запуском анализатора")
 
 window = tk.Tk()
-label = tk.Label(window, text="Анализатор текста 0.5 Beta", font=("Impact", 19), background="#c7730c")
-label1 = tk.Label(window, text="Кол-во слов для вордклауд:", font=("Impact", 16), background="#F4A460")
-noun_var = tk.BooleanVar()  # Variable to store the state of Noun checkbox
-verb_var = tk.BooleanVar()  # Variable to store the state of Verb checkbox
-cb_noun = tk.Checkbutton(window, text="Включить Noun(Сущ)", font=("Impact", 19), variable=noun_var)
-cb_verb = tk.Checkbutton(window, text="Включить Verb(Гл)", font=("Impact", 19), variable=verb_var)
-label2 = tk.Label(window, text="Ширина:", font=("Impact", 19))
-label3 = tk.Label(window, text="Высота:", font=("Impact", 19))
-button = tk.Button(window, font=("Impact", 17), background="#DAA520", text="сделать вордклауд", command=run)
-button2 = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать цвет", command=lambda: show_color_picker(canvas))
-file_button = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать файл", command=select_file)
+window.title("Анализатор текста 0.5 Beta")
+
+# Создание и упорядочивание виджетов с помощью grid()
+label = tk.Label(window, text="Кол-во слов для вордклауд:", font=("Impact", 16), background="#F4A460")
+label.grid(row=0, column=0, padx=6, pady=6)
+
 entry = tk.Entry(window, font=("Impact", 18))
+entry.grid(row=0, column=1, padx=6, pady=6)
+
+file_button = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать файл", command=select_file)
+file_button.grid(row=0, column=2, padx=6, pady=6)
+
+button = tk.Button(window, font=("Impact", 17), background="#DAA520", text="сделать вордклауд", command=run)
+button.grid(row=0, column=3, padx=6, pady=6)
+
+button2 = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать цвет", command=show_color_picker)
+button2.grid(row=1, column=0, padx=6, pady=6)
+
+label2 = tk.Label(window, text="Ширина:", font=("Impact", 19))
+label2.grid(row=1, column=1, padx=6, pady=6)
+
 entry2 = tk.Entry(window, font=("Impact", 18))
+entry2.grid(row=1, column=2, padx=6, pady=6)
+
+label3 = tk.Label(window, text="Высота:", font=("Impact", 19))
+label3.grid(row=1, column=3, padx=6, pady=6)
+
 entry3 = tk.Entry(window, font=("Impact", 18))
+entry3.grid(row=1, column=4, padx=6, pady=6)
 
-label.pack(anchor="nw", padx=6, pady=6)
-label1.pack(anchor="nw", padx=6, pady=6)
-entry.pack(anchor="nw", padx=6, pady=6)
-file_button.pack(anchor="nw", padx=6, pady=6)
-button.pack(anchor="nw", padx=6, pady=6)
-button2.pack(anchor="nw", padx=6, pady=6)
-label2.pack(anchor="nw", padx=6, pady=6)
-entry2.pack(anchor="nw", padx=6, pady=6)
-label3.pack(anchor="nw", padx=6, pady=6)
-entry3.pack(anchor="nw", padx=6, pady=6)
-cb_noun.pack(anchor="nw", padx=6, pady=6)  # Display Noun checkbox
-cb_verb.pack(anchor="nw", padx=6, pady=6)  # Display Verb checkbox
+noun_var = tk.BooleanVar()  # Variable to store the state of Noun checkbox
+cb_noun = tk.Checkbutton(window, text="Включить Noun(Сущ)", font=("Impact", 19), variable=noun_var)
+cb_noun.grid(row=2, column=0, padx=6, pady=6)
 
-# Create a canvas to display the square
-canvas = tk.Canvas(window, width=100, height=100, background=color)
-canvas.pack()
+verb_var = tk.BooleanVar()  # Variable to store the state of Verb checkbox
+cb_verb = tk.Checkbutton(window, text="Включить Verb(Гл)", font=("Impact", 19), variable=verb_var)
+cb_verb.grid(row=2, column=1, padx=6, pady=6)
 
 window.mainloop()
 ```
 
-This code adds a canvas widget to display the square and updates its background color when a color is chosen using the "выбрать цвет" button.
+Этот код упорядочивает виджеты с использованием `grid()` и определяет, в какой строке и столбце каждый виджет должен быть размещен. Вы можете настроить расположение и внешний вид элементов, добавив больше строк и столбцов или изменяя параметры `padx` и `pady` для управления отступами.
