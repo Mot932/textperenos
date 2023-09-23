@@ -1,12 +1,9 @@
-Чтобы упорядочить элементы в вашем GUI с помощью `grid`, вы должны использовать метод `grid()` для каждого виджета и указать его строку и столбец в сетке. Вот как это может выглядеть для вашего кода:
-
-```python
 import tkinter as tk
 from tkinter import colorchooser, filedialog
 import analiz
 
-color = ""  # Variable to store the selected color
-file_path = ""  # Variable to store the selected file path
+color = ""  
+file_path = ""  
 
 def show_color_picker():
     global color
@@ -22,12 +19,12 @@ def select_file():
 
 def run():
     pos_list = []
-    if noun_var.get():  # If Noun checkbox is selected
+    if noun_var.get(): 
         pos_list.append('NOUN')
-    if verb_var.get():  # If Verb checkbox is selected
+    if verb_var.get(): 
         pos_list.append('VERB')
 
-    if file_path:  # Check if a file has been selected
+    if file_path:  
         analiz.TextAnalyser(
             file_name=file_path,
             pos_list=pos_list,
@@ -40,45 +37,42 @@ def run():
         print("Выберите файл перед запуском анализатора")
 
 window = tk.Tk()
-window.title("Анализатор текста 0.5 Beta")
+window.title("Анализатор текста 0.6 Beta")
 
 # Создание и упорядочивание виджетов с помощью grid()
-label = tk.Label(window, text="Кол-во слов для вордклауд:", font=("Impact", 16), background="#F4A460")
+label = tk.Label(window, text="Кол-во слов для вордклауд:", font=("Impact", 20), background="#ffcc00")
 label.grid(row=0, column=0, padx=6, pady=6)
 
-entry = tk.Entry(window, font=("Impact", 18))
-entry.grid(row=0, column=1, padx=6, pady=6)
+entry = tk.Entry(window, font=("Arial black", 18))
+entry.grid(row=1, column=0, padx=6, pady=6)
 
 file_button = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать файл", command=select_file)
-file_button.grid(row=0, column=2, padx=6, pady=6)
+file_button.grid(row=2, column=0, padx=6, pady=6)
 
 button = tk.Button(window, font=("Impact", 17), background="#DAA520", text="сделать вордклауд", command=run)
-button.grid(row=0, column=3, padx=6, pady=6)
+button.grid(row=4, column=0, padx=6, pady=6)
 
 button2 = tk.Button(window, font=("Impact", 17), background="#59c977", text="выбрать цвет", command=show_color_picker)
-button2.grid(row=1, column=0, padx=6, pady=6)
+button2.grid(row=3, column=0, padx=6, pady=6)
 
 label2 = tk.Label(window, text="Ширина:", font=("Impact", 19))
-label2.grid(row=1, column=1, padx=6, pady=6)
+label2.grid(row=0, column=1, padx=6, pady=6)
 
 entry2 = tk.Entry(window, font=("Impact", 18))
-entry2.grid(row=1, column=2, padx=6, pady=6)
+entry2.grid(row=1, column=1, padx=6, pady=6)
 
 label3 = tk.Label(window, text="Высота:", font=("Impact", 19))
-label3.grid(row=1, column=3, padx=6, pady=6)
+label3.grid(row=2, column=1, padx=6, pady=6)
 
 entry3 = tk.Entry(window, font=("Impact", 18))
-entry3.grid(row=1, column=4, padx=6, pady=6)
+entry3.grid(row=3, column=1, padx=6, pady=6)
 
 noun_var = tk.BooleanVar()  # Variable to store the state of Noun checkbox
 cb_noun = tk.Checkbutton(window, text="Включить Noun(Сущ)", font=("Impact", 19), variable=noun_var)
-cb_noun.grid(row=2, column=0, padx=6, pady=6)
+cb_noun.grid(row=4, column=1, padx=6, pady=6)
 
 verb_var = tk.BooleanVar()  # Variable to store the state of Verb checkbox
 cb_verb = tk.Checkbutton(window, text="Включить Verb(Гл)", font=("Impact", 19), variable=verb_var)
-cb_verb.grid(row=2, column=1, padx=6, pady=6)
+cb_verb.grid(row=5, column=1, padx=6, pady=6)
 
 window.mainloop()
-```
-
-Этот код упорядочивает виджеты с использованием `grid()` и определяет, в какой строке и столбце каждый виджет должен быть размещен. Вы можете настроить расположение и внешний вид элементов, добавив больше строк и столбцов или изменяя параметры `padx` и `pady` для управления отступами.
