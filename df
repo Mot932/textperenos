@@ -1,9 +1,12 @@
 import tkinter as tk
 from tkinter import colorchooser, filedialog
+from PIL import Image
 import analiz
 
 color = ""  
 file_path = ""  
+png_path="wordcloud.png"
+
 
 def show_color_picker():
     global color
@@ -11,11 +14,20 @@ def show_color_picker():
     if color[1]:
         print("Выбранный цвет:", color[1])
 
+
 def select_file():
     global file_path
     file_path = filedialog.askopenfilename(title="Выберите файл")
     if file_path:
         print("Выбранный файл:", file_path)
+
+
+def open_image():
+    global png_path
+    if png_path:
+        image = Image.open(png_path)
+        image.show()
+
 
 def run():
     pos_list = []
@@ -35,6 +47,7 @@ def run():
         )
     else:
         print("Выберите файл перед запуском анализатора")
+
 
 window = tk.Tk()
 window.title("Анализатор текста 0.6 Beta")
@@ -74,5 +87,8 @@ cb_noun.grid(row=4, column=1, padx=6, pady=6)
 verb_var = tk.BooleanVar()  # Variable to store the state of Verb checkbox
 cb_verb = tk.Checkbutton(window, text="Включить Verb(Гл)", font=("Impact", 19), variable=verb_var)
 cb_verb.grid(row=5, column=1, padx=6, pady=6)
+
+imButton = tk.Button(window, text="Открыть png", font=("Impact", 19), background="#ffcc00", command=open_image)
+imButton.grid(row=5, column=0, padx=6, pady=6)
 
 window.mainloop()
