@@ -1,37 +1,20 @@
-To handle errors in your tkinter code using the filedialog, you can consider implementing error handling for scenarios where the user doesn't select a file before running the analyzer. You can also add error handling for other potential issues. Here's an updated version of your code with error handling:
+To display error messages in separate message boxes, you can use the `messagebox` module from `tkinter`. Here's how you can modify your code to show error messages in message boxes:
+
+1. Import the `messagebox` module at the beginning of your code:
 
 ```python
 import tkinter as tk
-from tkinter import colorchooser, filedialog
-from tkinter import ttk  # Import ttk for the progress bar
+from tkinter import colorchooser, filedialog, messagebox  # Add messagebox import
+from tkinter import ttk
 from PIL import Image
 import analiz
 
-color = ""
-file_path = ""
-png_path = "wordcloud.png"
+# ... (rest of your code)
+```
 
-def show_color_picker():
-    global color
-    color = colorchooser.askcolor(title="Выберите цвет")
-    if color[1]:
-        print("Выбранный цвет:", color[1])
+2. Modify the `run()` function to show an error message in case the file is not selected:
 
-def select_file():
-    global file_path
-    file_path = filedialog.askopenfilename(title="Выберите файл")
-    if file_path:
-        print("Выбранный файл:", file_path)
-
-def open_image():
-    global png_path
-    if png_path:
-        try:
-            image = Image.open(png_path)
-            image.show()
-        except Exception as e:
-            print("Ошибка при открытии изображения:", str(e))
-
+```python
 def run():
     pos_list = []
     if noun_var.get():
@@ -40,31 +23,25 @@ def run():
         pos_list.append('VERB')
 
     if file_path:
-        try:
-            analyzer = analiz.TextAnalyser(
-                file_name=file_path,
-                pos_list=pos_list,
-                chislo=int(entry.get()),
-                background=color[1],
-                width=int(entry2.get()),
-                height=int(entry3.get())
-            )
+        analyzer = analiz.TextAnalyser(
+            file_name=file_path,
+            pos_list=pos_list,
+            chislo=int(entry.get()),
+            background=color[1],
+            width=int(entry2.get()),
+            height=int(entry3.get())
+        )
 
-            for i, word in enumerate(analyzer.process_words()):  # Replace with a method to process words
-                # Update the progress bar
-                progress['value'] = (i + 1) / total_words * 100
-                window.update_idletasks()
+        for i, word in enumerate(analyzer.process_words()):  # Replace with a method to process words
+            # Update the progress bar
+            progress['value'] = (i + 1) / total_words * 100
+            window.update_idletasks()
 
-            progress['value'] = 100  # Set progress bar to 100% when done
-        except Exception as e:
-            print("Ошибка при запуске анализатора:", str(e))
+        progress['value'] = 100  # Set progress bar to 100% when done
     else:
-        print("Выберите файл перед запуском анализатора")
-
-window = tk.Tk()
-window.title("Анализатор текста 0.6 Beta")
-
-# ... (rest of your code remains unchanged)
+        messagebox.showerror("Ошибка", "Выберите файл перед запуском анализатора")  # Show error message in a messagebox
 ```
+
+Now, when the user clicks the "сделать вордклауд" button without selecting a file, it will display an error message in a separate messagebox.```
 
 In this code, I've added try-except blocks around the critical sections of your code that may raise exceptions (e.g., opening an image or running the text analyzer). This will help catch and handle errors gracefully, displaying error messages in the console without crashing the application.
