@@ -1,1 +1,45 @@
+It looks like you have a tkinter application with a Progressbar, but you mentioned that it's not working. To make the Progressbar work properly, you need to ensure that you update its value during the analysis process.
 
+Here's what you can do:
+
+1. Modify your `run()` function to update the Progressbar during the analysis:
+
+```python
+def run():
+    pos_list = []
+    if noun_var.get():
+        pos_list.append('NOUN')
+    if verb_var.get():
+        pos_list.append('VERB')
+
+    if file_path:
+        if color and len(color) == 2 and color[1]:
+            analyzer = analiz.TextAnalyser(
+                file_name=file_path,
+                pos_list=pos_list,
+                chislo=int(entry.get()),
+                background=color[1],
+                width=int(entry2.get()),
+                height=int(entry3.get())
+            )
+
+            total_steps = analyzer.get_total_steps()
+            for step in range(total_steps):
+                # Perform the analysis step
+                # Update the progress bar
+                progress_value = (step + 1) / total_steps * 100
+                update_progress_bar(progress_value)
+
+                # You should add your analysis logic here
+                # This is where you perform each step of the analysis
+                # For example, analyzer.analyze_step()
+
+        else:
+            messagebox.showerror("Ошибка", "Выберите цвет перед запуском анализатора")
+    else:
+        messagebox.showerror("Ошибка", "Выберите файл перед запуском анализатора")
+```
+
+2. Make sure you have the `update_progress_bar()` function defined correctly to update the Progressbar's value.
+
+With these changes, your Progressbar should update as the analysis progresses. Remember to add your analysis logic inside the `for` loop in the `run()` function.
